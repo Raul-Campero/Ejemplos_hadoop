@@ -1,2 +1,4 @@
-# Ejemplos_hadoop
-Poner la descripción del repo
+## Ejemplos_hadoop
+
+Nuestros ejemplos fueron creados por el repositorio: [github/docker-hadoop](https://github.com/big-data-europe/docker-hadoop)
+
