@@ -26,3 +26,9 @@ Para descargar el archivo nos dirigimos a
 * [hadoop-mapreduce](https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-mapreduce-examples/2.7.1/)
 * Se descarga el archivo con nombre `hadoop-mapreduce-examples-2.7.1-sources.jar`
 Ese archivo se debe guardar en la misma carpeta de docker-hadoop.
+
+Para el archivo de texto utilizaremos el archivo llaneros, guardándolo en la misma carpeta de docker-hadoop.
+
+Regresamos a nuestra terminal, ejecutando el siguiente comando: `docker cp hadoop-mapreduce-examples-2.7.1-sources.jar namenode:/tmp` lo que hace es movernos el archivo a un contenedor temporal. Haremos lo mismo para el archivo de texto: `docker cp llaneros.txt namenode:/tmp`
+
+
