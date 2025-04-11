@@ -1,7 +1,7 @@
 ## Ejemplos_hadoop
 Hola, bienenido a este repositorio.
 
-Aquí encontrarás ejemplos y comandos para utilizar docker-hadoop.
+Aquí encontrarás ejemplos y comandos para utilizar **docker-hadoop**.
 
 Los créditos correspondientes son para: [github/docker-hadoop](https://github.com/big-data-europe/docker-hadoop)
 
@@ -31,4 +31,64 @@ Para el archivo de texto utilizaremos el archivo llaneros, guardándolo en la mi
 
 Regresamos a nuestra terminal, ejecutando el siguiente comando: `docker cp hadoop-mapreduce-examples-2.7.1-sources.jar namenode:/tmp` lo que hace es movernos el archivo a un contenedor temporal. Haremos lo mismo para el archivo de texto: `docker cp llaneros.txt namenode:/tmp`
 
+**Ingresamos al contendor llamado** `namenode`: 
+* `docker exec -it namenode bash`
 
+**Luego ponemos (crea una carpeta dentro del contenedor)**:
+* `hdfs dfs -mkdir /user/root/input_contador`
+
+**Entramos al contenedor temporal utilizando el comando**
+
+* `cd /tmp`
+
+**El siguiente comando especifica el directorio de entrada**: 
+
+* `hdfs dfs -put llaneros.txt /user/root/input_contador` (si usas un nuevo archivo y no tiene la terminación .txt se pone el nombre tal cual)
+
+**Ahora ejecutamos MapReduce**
+
+Descripción del comando:
+
+* _hadoop-mapreduce-examples-2.7.1-sources.jar_: Es el archivo JAR que contiene ejemplos de MapReduce para Hadoop en la versión 2.7.1. El ejemplo es el de "WordCount".
+
+* _org.apache.hadoop.examples.WordCount_: En este caso, es la clase WordCount, que cuenta palabras en archivos de texto.
+
+* _input_contador_: Aquí es donde están los datos que se van a procesar.
+
+* _output_contador_: Especifica el directorio de salida donde se guardarán los resultados del trabajo.
+
+Es una sola línea de comando:
+
+`hadoop jar hadoop-mapreduce-examples-2.7.1-sources.jar org.apache.hadoop.examples.WordCount input_contador output_contador`
+
+**Para ver tus resultados**
+
+Descripción del comando:
+
+* _hdfs dfs_: Es el comando para interactuar con el sistema de archivos distribuidos (HDFS)
+
+* _-cat_: Muestra el contenido de un archivo
+
+* _/user/root/output_contador/*_: Especifica la ruta de los archivos que quieres leer. El `*` al final indica que se deben mostrar todos los archivos.
+
+Ponemos el comando:
+
+* `hdfs dfs -cat /user/root/output_contador/*`
+
+Para comprobar los resultados:
+
+* `hdfs dfs -ls /user/root/output_contador`
+
+De nuestro resultados lo que nos interesa es el archivo `part-r-00000`, que contiene nuestro recuento de palabras.
+
+Para lo anterior ponemos:
+
+* `hdfs dfs -cat /user/root/output_contador/part-r-00000 > /tmp/llaneros_wc.txt`
+
+Desupés ejecutamos:
+
+* `exit`
+
+Por útimo:
+
+* `docker cp namenode:/tmp/llaneros_wc.txt .`
