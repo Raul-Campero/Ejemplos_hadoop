@@ -91,15 +91,17 @@ Este comando lo que hará es guardarnos un archivo nuevo llamado _llaneros_wc.tx
 
 ## Ordenar números de Menor a Mayor (Temperaturas)
 
-Se utilizará el mismo archivo .jar del ejemplo pasado.
-
 Descargamos un nuevo archivo el cual contiene varias temperaturas que registraron a lo largo de varios años como texto plano.
+
+**Se utilizará el mismo archivo .jar del ejemplo pasado.**
 
 * [Maximum_Temp_Calculation_mapreduce](https://github.com/Rkrahul04/Maximum_Temp_Calculation_mapreduce/blob/master/Dataset%20-%20Calculate%20Maximum%20Temperature/Temperature). Descargamos el archivo y se descomprime.
 
 * Teniendo el archivo de `Temperature.txt` se mueve a la misma carpeta donde está docker-hadoop.
 
 Como ya contamos con `docker cp hadoop-mapreduce-examples-2.7.1-sources.jar namenode:/tmp` podemos omitir hacer ese paso. 
+
+Lo que hace es movernos el archivo a un contenedor temporal.
 
 Con el nuevo archivo de `Temperature.txt` ejecutamos lo siguiente:
 
@@ -145,7 +147,7 @@ Esta línea lo que hará será guardar nuestro conteo de palabras en un nuevo ar
 
 * `hdfs dfs -cat /user/root/output_temperaturas/part-r-00000 > /tmp/temperaturas_ordenadas.txt`
 
-Desupés ejecutamos:
+**Desupés ejecutamos:**
 
 Este comando lo que hará será salirnos del nodo maestro (namenode)
 
@@ -156,3 +158,58 @@ Por útimo:
 Este comando lo que hará es guardarnos un archivo nuevo llamado _llaneros_wc.txt_ con el resultado de conteno de palabras.
 
 * `docker cp namenode:/tmp/temperaturas_ordenadas.txt .`
+
+## Sudoku
+Resolveremos sudokus contenidos en un archivo de texto.
+
+Usaremos un archivo .jar que tiene las clases necesarias para ejecutar el MapReduce.
+
+Para descargar el archivo nos dirigimos a 
+* Se descarga el archivo con nombre `hadoop-examples-0.20.205.0.jar`.
+
+Ese archivo se debe guardar en la misma carpeta de docker-hadoop.
+
+Se descarga el siguiente archivo:
+
+* [puzzle1.dta](https://2935835229-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FVMoUbnSkOwuxDBZq5HyK%2Fuploads%2FJAygXsvKPKvUwThTxh7f%2Fpuzzle1.dta?alt=media&token=8291160e-3730-4125-b34d-12517d084419)
+
+Teniendo el archivo de `puzzle1.dta` se mueve a la misma carpeta donde está docker-hadoop.
+
+**Regresamos a nuestra terminal, ejecutando el siguiente comando:**
+* `docker cp hadoop-examples-0.20.205.0.jar namenode:/tmp`
+
+Lo que hace es movernos el archivo a un contenedor temporal.
+
+**Haremos lo mismo para el archivo de texto:**
+* `docker cp puzzle1.dta namenode:/tmp`
+
+**Ingresamos al contenedor** `namenode`: 
+* `docker exec -it namenode bash`
+
+**Creamos la carpeta**:
+* `hdfs dfs -mkdir /user/root/input_puzzle1.dta`
+
+**Entramos al contenedor temporal utilizando el comando**
+
+* `cd /tmp`
+
+**El siguiente comando especifica el directorio de entrada**: 
+
+* `hadoop jar hadoop-examples-0.20.205.0.jar sudoku puzzle1.dta`
+
+**Para ver tus resultados**
+
+Ponemos el comando:
+
+* `hadoop jar hadoop-examples-0.20.205.jar sudoku puzzle1.dta > solucion_puzzle1.txt`
+
+Desupés ejecutamos:
+
+Este comando lo que hará será salirnos del nodo maestro (namenode)
+
+* `exit`
+
+Por útimo:
+
+* `docker cp namenode:/tmp/solucion_puzzle1.txt .`
+
