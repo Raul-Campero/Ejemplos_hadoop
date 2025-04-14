@@ -20,8 +20,7 @@ En este ejercicio se descargará un archivo de texto para contar las palabras.
 Usaremos un archivo .jar que tiene las clases necesarias para ejecutar el MapReduce.
 Para descargar el archivo nos dirigimos a 
 * [hadoop-mapreduce](https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-mapreduce-examples/2.7.1/)
-* Se descarga el archivo con nombre `hadoop-mapreduce-examples-2.7.1-sources.jar`
-Ese archivo se debe guardar en la misma carpeta de docker-hadoop.
+* Se descarga el archivo con nombre `hadoop-mapreduce-examples-2.7.1-sources.jar`. Ese archivo se debe guardar en la misma carpeta de docker-hadoop.
 
 Para el archivo de texto utilizaremos el archivo llaneros, guardándolo en la misma carpeta de docker-hadoop.
 
@@ -43,29 +42,11 @@ Regresamos a nuestra terminal, ejecutando el siguiente comando: `docker cp hadoo
 
 **Ahora ejecutamos MapReduce**
 
-Descripción del comando:
-
-* _hadoop-mapreduce-examples-2.7.1-sources.jar_: Es el archivo JAR que contiene ejemplos de MapReduce para Hadoop en la versión 2.7.1. El ejemplo es el de "WordCount".
-
-* _org.apache.hadoop.examples.WordCount_: En este caso, es la clase WordCount, que cuenta palabras en archivos de texto.
-
-* _input_contador_: Aquí es donde están los datos que se van a procesar.
-
-* _output_contador_: Especifica el directorio de salida donde se guardarán los resultados del trabajo.
-
-Es una sola línea de comando:
+En una sola línea de comando:
 
 `hadoop jar hadoop-mapreduce-examples-2.7.1-sources.jar org.apache.hadoop.examples.WordCount input_contador output_contador`
 
 **Para ver tus resultados**
-
-Descripción del comando:
-
-* _hdfs dfs_: Es el comando para interactuar con el sistema de archivos distribuidos (HDFS)
-
-* _-cat_: Muestra el contenido de un archivo
-
-* _/user/root/output_contador/*_: Especifica la ruta de los archivos que quieres leer. El `*` al final indica que se deben mostrar todos los archivos.
 
 Ponemos el comando:
 
@@ -87,4 +68,15 @@ Desupés ejecutamos:
 
 Por útimo:
 
+Este comando lo que hará es guardarnos un archivo nuevo llamado _llaneros_wc.txt_ con el resultado de conteno de palabras.
+
 * `docker cp namenode:/tmp/llaneros_wc.txt .`
+
+## Ordenar números de Menor a MAyor (Temperaturas)
+
+Se utilizará el mismo archivo .jar del ejemplo pasado.
+
+Descargamos un nuevo archivo el cual contiene varias temperaturas que registraron a lo largo de varios años como texto plano.
+
+* [Maximum_Temp_Calculation_mapreduce](https://github.com/Rkrahul04/Maximum_Temp_Calculation_mapreduce/blob/master/Dataset%20-%20Calculate%20Maximum%20Temperature/Temperature). Descargamos el archivo y se des
+
